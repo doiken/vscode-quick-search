@@ -1,0 +1,116 @@
+{
+    "name": "quick-searcher",
+    "displayName": "Quick Searcher",
+    "description": "Quickly search words using ag(the silver searcher)",
+    "version": "0.0.1",
+    "publisher": "doiken",
+    "engines": {
+        "vscode": "^1.26.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "viewsContainers": {
+            "activitybar": [
+                {
+                    "id": "QuickSearcher",
+                    "title": "QuickSearcher",
+                    "icon": "media/qs.svg"
+                }
+            ]
+        },
+        "views": {
+            "QuickSearcher": [
+                {
+                    "id": "quickSearcher",
+                    "name": "Result"
+                }
+            ]
+        },
+        "commands": [
+            {
+                "command": "quickSearcher.search",
+                "title": "Search Word",
+                "category": "QuickSearch",
+                "icon": {
+                    "light": "resources/light/search.svg",
+                    "dark": "resources/dark/search.svg"
+                }
+            },
+            {
+                "command": "quickSearcher.searchInFolder",
+                "title": "Search Word in Selected Folder",
+                "category": "QuickSearch"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "quickSearcher.search"
+                }
+            ],
+            "explorer/context": [
+                {
+                    "command": "quickSearcher.searchInFolder",
+                    "group": "navigation"
+                }
+            ]
+        },
+        "configuration": [
+            {
+                "title": "Quick Searcher",
+                "properties": {
+                    "quickSearcher.searchBySelection.enabled": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "set to enable start searching by selection"
+                    },
+                    "quickSearcher.incrementalSearch.enabled": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "set to enable incremenatal search or not"
+                    },
+                    "quickSearcher.incrementalSearch.startBy": {
+                        "type": "boolean",
+                        "default": 5,
+                        "description": "set to limit character length for staring incremenatal search"
+                    },
+                    "quickSearcher.incrementalSearch.delayMs": {
+                        "type": "number",
+                        "default": 300,
+                        "description": "set to delay start searching"
+                    },
+                    "quickSearcher.searchItem.labelLength": {
+                        "type": "number",
+                        "default": 120,
+                        "description": "set to limit length of searched words as label"
+                    },
+                    "quickSearcher.searchItem.expanded": {
+                        "type": "boolean",
+                        "default": true,
+                        "description": "set to expand searched items"
+                    }
+                }
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.6.1",
+        "vscode": "^1.1.6",
+        "tslint": "^5.8.0",
+        "@types/node": "^7.0.43",
+        "@types/mocha": "^2.2.42"
+    }
+}
