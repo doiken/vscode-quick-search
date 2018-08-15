@@ -2,7 +2,7 @@
     "name": "quick-searcher",
     "displayName": "Quick Searcher",
     "description": "Quickly search words using ag(the silver searcher)",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "publisher": "doiken",
     "engines": {
         "vscode": "^1.26.0"
