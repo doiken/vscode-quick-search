@@ -10,6 +10,12 @@
     "categories": [
         "Other"
     ],
+    "keywords": [
+        "search tool",
+        "incremental search",
+        "The Silver Searcher",
+        "ag"
+    ],
     "activationEvents": [
         "*"
     ],
@@ -44,20 +50,29 @@
             },
             {
                 "command": "quickSearcher.searchInFolder",
-                "title": "Search Word in Selected Folder",
+                "title": "Search Word in Selected Folder(NO hotkey available)",
                 "category": "QuickSearch"
             }
         ],
         "menus": {
             "commandPalette": [
                 {
-                    "command": "quickSearcher.search"
+                    "command": "quickSearcher.searchInFolder",
+                    "when": "false"
+                }
+            ],
+            "view/title": [
+                {
+                    "command": "quickSearcher.search",
+                    "group": "navigation"
                 }
             ],
             "explorer/context": [
                 {
                     "command": "quickSearcher.searchInFolder",
-                    "group": "navigation"
+                    "title": "Search Word in Selected Folder",
+                    "group": "4_search",
+                    "when": "explorerResourceIsFolder"
                 }
             ]
         },
@@ -112,5 +127,14 @@
         "tslint": "^5.8.0",
         "@types/node": "^7.0.43",
         "@types/mocha": "^2.2.42"
-    }
+    },
+    "license": "SEE LICENSE IN LICENSE",
+    "bugs": {
+        "url": "https://github.com/doiken/vscode-quick-search/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/doiken/vscode-quick-search.git"
+    },
+    "homepage": "https://github.com/doiken/vscode-quick-search/blob/master/README.md"
 }

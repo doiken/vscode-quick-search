@@ -1,65 +1,27 @@
-# quick-searcher README
+# quick-searcher
 
-This is the README for your extension "quick-searcher". After writing up a brief description, we recommend including the following sections.
+Quickly search words incrementally in workspace using the quick silver.
 
-## Features
+![feature X](resources/animation.gif "image")
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+# Features
 
-For example if there is an image subfolder under your extension project workspace:
+ commands | description 
+ --- | ---
+quickSearcher.search | display incremental search input box.<br /> (preset selection if exists.)
+quickSearcher.searchInFolder | same as `quickSearcher.search` but in selected folder. (context menu only)
 
-\!\[feature X\]\(images/feature-x.png\)
+# Extention settings
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+configurations | description
+--- | ---
+quickSearcher.searchBySelection.enabled | set to enable start searching by selection
+quickSearcher.incrementalSearch.enabled | set to enable incremenatal search or not
+quickSearcher.incrementalSearch.startBy | set to limit character length for staring incremenatal search
+quickSearcher.incrementalSearch.delayMs | set to delay start searching
+quickSearcher.searchItem.labelLength | set to limit length of searched words as label
+quickSearcher.searchItem.expanded | set to expand searched items
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+[the_silver_searcher](https://github.com/ggreer/the_silver_searcher) is necessary
