@@ -3,17 +3,18 @@ import * as cp from 'child_process';
 import * as os from 'os';
 import * as vscode from 'vscode';
 import { Item } from './treeitem/Item';
+import { Input } from './input';
 
 export class Searcher {
     static readonly workspaceRoot: string = vscode.workspace.rootPath || '';
 
-    static async search(word: string, searchFolder: string): Promise<Item[]> {
-		if (word === '') {
+    static async search(input: Input): Promise<Item[]> {
+		if (input.word === '') {
 			return [];
 		}
 
-        const output = await this._searchCmd(word, searchFolder);
-        return this._convertIntoItem(word, output);
+        const output = await this._search(input);
+        return this._convertIntoItem(input, output);
     }
 
 	static readonly fileCollapsibleState: number = vscode.workspace.getConfiguration().get('quickSearcher.searchItem.expanded')
@@ -24,11 +25,11 @@ export class Searcher {
 		return new RegExp("(.*):(\\d+:\\d+):(.*)", "g");
 	}
 
-    private static _searchCmd(word: string, searchFolder: string): Promise<string> {
+    private static _search(input: Input): Promise<string> {
         const command = 'ag';
-        const args = ["-o", "--nogroup", "--column", word];
-        if (searchFolder !== '') {
-            args.push(searchFolder);
+        const args = ["-o", "--nogroup", "--column", input.word];
+        if (input.folder !== '') {
+            args.push(input.folder);
         }
         const options = { cwd: this.workspaceRoot };
         return new Promise<string>((resolve) => {
@@ -43,7 +44,7 @@ export class Searcher {
         });
     }
 
-    private static _convertIntoItem(word: string, output: string): Item[] {
+    private static _convertIntoItem(input: Input, output: string): Item[] {
         const lines = output.split(os.EOL).filter((l) => { return l !== ''; });
         const items: { [s: string]: Item } = lines.reduce((acc: { [s: string]: Item }, line) => {
             const matched: string[] = this._fileRegex().exec(line) || [];
@@ -51,7 +52,7 @@ export class Searcher {
             const resourceUri = vscode.Uri.file(`${this.workspaceRoot}/${filePath}`);
             let item = <Item>acc[resourceUri.fsPath];
             if (!item) {
-                item = acc[resourceUri.fsPath] = new Item(filePath, this.fileCollapsibleState, resourceUri, resourceUri.fsPath, word);
+                item = acc[resourceUri.fsPath] = new Item(filePath, this.fileCollapsibleState, resourceUri, resourceUri.fsPath, input.word);
             }
             item.pushLine(lineColumn, searchedLine);
             return acc;
