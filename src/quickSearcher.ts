@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as cp from 'child_process';
 import * as os from 'os';
+import { Item } from './treeitem/Item';
 
 export class QuickSearcherProvider implements vscode.TreeDataProvider<Item> {
 	private _onDidChangeTreeData: vscode.EventEmitter<Item | undefined> = new vscode.EventEmitter<Item | undefined>();
