@@ -1,6 +1,6 @@
 'use strict';
 import * as vscode from 'vscode';
-import { QuickSearcherProvider } from './quickSearcher'
+import { QuickSearcherProvider } from './quickSearcherProvider'
 
 export function activate(context: vscode.ExtensionContext) {
     const quickSearcherProvider = new QuickSearcherProvider();
