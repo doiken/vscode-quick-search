@@ -61,6 +61,11 @@
                     "light": "resources/light/clear.svg",
                     "dark": "resources/dark/clear.svg"
                 }
+            },
+            {
+                "command": "quickSearcher.cancelSearch",
+                "title": "Cancel Searching",
+                "category": "QuickSearch"
             }
         ],
         "menus": {

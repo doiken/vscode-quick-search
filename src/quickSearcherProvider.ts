@@ -23,6 +23,7 @@ export class QuickSearcherProvider implements vscode.TreeDataProvider<Item> {
 			this._input.clear();
 			this._onDidChangeTreeData.fire();
 		});
+		vscode.commands.registerCommand('quickSearcher.cancelSearch', () => Searcher.cancel());
 	}
 
 	private openResource(resource: vscode.Uri, range?: vscode.Range): void {
