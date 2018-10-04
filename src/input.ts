@@ -16,6 +16,11 @@ export class Input {
 	constructor(private event: vscode.EventEmitter<Item | undefined>) {
     }
 
+	clear(): void {
+        this._searchWord = '';
+        this._searchFolder = '';
+    }
+
 	async show(searchFolder: string): Promise<void> {
         this._searchFolder = searchFolder;
 		const activeEditor = vscode.window.activeTextEditor;
