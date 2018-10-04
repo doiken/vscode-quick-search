@@ -13,12 +13,16 @@ export class QuickSearcherProvider implements vscode.TreeDataProvider<Item> {
     readonly workspaceRoot: string = vscode.workspace.rootPath || '';
 
 	constructor() {
+		this._input = new Input(this._onDidChangeTreeData)
 		vscode.commands.registerCommand('quickSearcher.search', () => this._input.show(''));
 		vscode.commands.registerCommand('quickSearcher.searchInFolder', (uri: vscode.Uri) => {
 			this._input.show(uri.fsPath.replace(this.workspaceRoot + '/', ''))
 		});
 		vscode.commands.registerCommand('quickSearcher.openFile', (resourceUri: vscode.Uri, range?: vscode.Range) => this.openResource(resourceUri, range));
-		this._input = new Input(this._onDidChangeTreeData)
+		vscode.commands.registerCommand('quickSearcher.clear', () => {
+			this._input.clear();
+			this._onDidChangeTreeData.fire();
+		});
 	}
 
 	private openResource(resource: vscode.Uri, range?: vscode.Range): void {
@@ -39,12 +43,15 @@ export class QuickSearcherProvider implements vscode.TreeDataProvider<Item> {
 
 	private async _getChildren(item?: Item): Promise<Item[]> {
 		if (!this.workspaceRoot) {
-			vscode.window.showInformationMessage('Workspace necessary');
+			vscode.window.showErrorMessage('Workspace Necessary for Search');
 			return [];
 		}
 
 		if (item) {
 			return item.getLines();
+		} else if (this._input.word == '') {
+			// refresh
+			return [];
 		} else {
 			return await Searcher.search(this._input);
 		}

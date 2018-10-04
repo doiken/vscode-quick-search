@@ -52,6 +52,15 @@
                 "command": "quickSearcher.searchInFolder",
                 "title": "Search Word in Selected Folder(NO hotkey available)",
                 "category": "QuickSearch"
+            },
+            {
+                "command": "quickSearcher.clear",
+                "title": "Clear Search Results",
+                "category": "QuickSearch",
+                "icon": {
+                    "light": "resources/light/clear.svg",
+                    "dark": "resources/dark/clear.svg"
+                }
             }
         ],
         "menus": {
@@ -64,6 +73,10 @@
             "view/title": [
                 {
                     "command": "quickSearcher.search",
+                    "group": "navigation"
+                },
+                {
+                    "command": "quickSearcher.clear",
                     "group": "navigation"
                 }
             ],
