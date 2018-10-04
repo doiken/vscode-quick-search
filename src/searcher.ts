@@ -7,14 +7,29 @@ import { Input } from './input';
 
 export class Searcher {
     static readonly workspaceRoot: string = vscode.workspace.rootPath || '';
+    private static _agProcess: cp.ChildProcess | null;
+
+    private static get statusBarItem(): vscode.StatusBarItem {
+        const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 10)
+        statusBarItem.command = 'quickSearcher.cancelSearch';
+        statusBarItem.text = '$(x) Cancel Search';
+        return statusBarItem;
+    }
 
     static async search(input: Input): Promise<Item[]> {
 		if (input.word === '') {
 			return [];
 		}
-
+        this.cancel();
         const output = await this._search(input);
         return this._convertIntoItem(input, output);
+    }
+
+    static cancel(): void {
+        if (this._agProcess) {
+            this._agProcess.kill();
+            this._agProcess = null;
+        }
     }
 
 	static readonly fileCollapsibleState: number = vscode.workspace.getConfiguration().get('quickSearcher.searchItem.expanded')
@@ -33,9 +48,13 @@ export class Searcher {
         }
         const options = { cwd: this.workspaceRoot };
         return new Promise<string>((resolve) => {
-            cp.execFile(command, args, options, (error: Error, stdout: string, stdderr: string) => {
+            const statusBarItem = this.statusBarItem;
+            statusBarItem.show();
+            this._agProcess = cp.execFile(command, args, options, (error: Error | null, stdout: string, stdderr: string) => {
+                statusBarItem.dispose();
+                this._agProcess = null;
                 if (error) {
-                    vscode.window.showInformationMessage('Search word not found');
+                    vscode.window.showInformationMessage('Search failed');
                     resolve('');
                 } else {
                     resolve(stdout);
